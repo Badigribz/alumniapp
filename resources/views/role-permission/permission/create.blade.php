@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <div class="container mt-5">
-        <div class="row">
+         <div class="row">
             <div class="col-md-12">
 
                 @if ($errors->any())
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+         </div>
     </div>
 
 </x-app-layout>

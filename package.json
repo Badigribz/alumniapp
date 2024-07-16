@@ -17,7 +17,11 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.8",
+<<<<<<< HEAD
         "bootstrap": "^5.3.0-alpha1",
         "sass": "^1.77.8"
+=======
+        "bootstrap": "^5.3.0-alpha1"
+>>>>>>> 5743b319a9ca3374f3c50c7995b12b0b4f4adc19
     }
 }
