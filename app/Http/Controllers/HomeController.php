@@ -14,15 +14,17 @@ class HomeController extends Controller
         {
             $user_type = Auth()->user()->usertype;
 
-            if ($user_type == 'super-admin') {
-                
+            if ($user_type == 'super-admin') 
+            {
                 return view('super.index');
-            }else if ($user_type == 'admin') {
-                
-                return view('admin.index');
-            }elseif ($user_type == 'alumni') {
-                
+            }
+            elseif ($user_type == 'alumni') 
+            {
                 return view('alumni.index');
+            }
+            elseif ($user_type == 'admin') 
+            {
+                return view('admin.index');
             }
             else {
                 return redirect()->back();
