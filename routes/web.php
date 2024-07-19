@@ -1,19 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
+
+Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
+
+//put this route and imported it above in an attempt to change the beginning page to login directly 
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
-//put this route and imported it above in an attempt to change the beginning page to login directly 
 Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () { 
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -21,22 +26,35 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::group(['middleware' => ['role:super-admin|admin']], function() {
+// Route::group(['middleware' => ['super-admin']], function() {
+    
+// });
 
-    Route::resource('permissions', App\Http\Controllers\PermissionController::class);
+// Route::group(['middleware' => ['admin']], function() {
+    
+// });
 
-    Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class, 'destroy']);
+// Route::group(['middleware' => ['alumni']], function() {
+    
+// });
 
- 
-    Route::resource('roles', App\Http\Controllers\RoleController::class);
-    Route::get('roles/{roleId}/delete', [App\Http\Controllers\RoleController::class, 'destroy']);
-    Route::get('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'addPermissionToRole']);
-    Route::put('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'givePermissionToRole']);
 
-    Route::resource('users', App\Http\Controllers\UserController::class);
-    Route::get('users/{userId}/delete', [App\Http\Controllers\UserController::class, 'destroy']);
+// Route::group(['middleware' => ['role:super-admin|admin']], function() {
 
-});
+//     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
+
+//     Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class, 'destroy']);
+
+
+//     Route::resource('roles', App\Http\Controllers\RoleController::class);
+//     Route::get('roles/{roleId}/delete', [App\Http\Controllers\RoleController::class, 'destroy']);
+//     Route::get('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'addPermissionToRole']);
+//     Route::put('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'givePermissionToRole']);
+
+//     Route::resource('users', App\Http\Controllers\UserController::class);
+//     Route::get('users/{userId}/delete', [App\Http\Controllers\UserController::class, 'destroy']);
+
+// });
 
 
 require __DIR__.'/auth.php';
