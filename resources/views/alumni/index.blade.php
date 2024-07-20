@@ -1,32 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html>
+  <head> 
+    <title>Librarian Dash </title>
+    
     @include('alumni.layouts.head')
   </head>
+
   <body>
 
+    <header class="header">   
+      @include('alumni.layouts.navbar')
+    </header>
 
-    <div class="wrapper">
-        @include('alumni.layouts.sidebar')
-        <x-app-layout></x-app-layout>
-       
-    </div>
+    <div class="d-flex align-items-stretch">
 
-    <div class="container">
-        <div class="page-inner">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-              @include('alumni.layouts.body')
-            </div>
+      <!-- Sidebar Navigation-->
+      @include('alumni.layouts.sidebar')
+      <!-- Sidebar Navigation end-->
+
+      <div class="page-content">
+        <div class="page-header">
+          <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Dashboard</h2>
+          </div>
         </div>
+        
+        @include('alumni.layouts.body')
+
+        <footer class="footer">
+          @include('alumni.layouts.footer')
+        </footer>
+
+      </div>
     </div>
-
-    <footer class="footer">
-     @include('alumni.layouts.footer')
-    </footer>
-    <!-- End Custom template --> 
-
+    
     @include('alumni.layouts.script')
 
   </body>
 </html>
-

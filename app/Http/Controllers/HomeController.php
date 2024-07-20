@@ -31,4 +31,14 @@ class HomeController extends Controller
             }
         }
     }
+
+    public function createjob()
+    {
+        return view('admin.layouts.createjob');
+    }
+
+    public function job_add()
+    {
+        
+    }
 }
