@@ -4,10 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+
+.menu-icon {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  padding-top: 20px;
+  transition: transform 0.3s ease;
+}
+
+.sidebar a, .dropdown-btn {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+.sidebar a:hover, .dropdown-btn:hover {
+  background-color: red;
+}
+
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+}
+
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    display: block;
+  }
+  .sidebar {
+    transform: translateX(-250px);
+  }
+  .sidebar.active {
+    transform: translateX(0);
+  }
+}
+
+  </style>
 </head>
 <body>
         <!-- Sidebar -->
-      <div class="sidebar">
+      <div class="sidebar" data-background-color="white">
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="red">
@@ -37,12 +97,7 @@
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
               <li class="nav-item active">
-                <a
-                  data-bs-toggle="collapse"
-                  href="#dashboard"
-                  class="collapsed"
-                  aria-expanded="false"
-                >
+                <a data-bs-toggle="collapse"href="#dashboard"class="collapsed"aria-expanded="false">
                   <i class="fas fa-home"></i>
                   <p>Dashboard</p>
                   <span class="caret"></span>
@@ -294,7 +349,7 @@
         <div class="main-header">
           <div class="main-header-logo">
             <!-- Logo Header -->
-            <div class="logo-header" data-background-color="dark">
+            <div class="logo-header" data-background-color="red">
               <a href="index.html" class="logo">
                 <img
                   src="{{asset('DashT/assets/img/kaiadmin/logo_light.svg')}}"
@@ -318,4 +373,27 @@
             </div>
             <!-- End Logo Header -->
 </body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  var dropdown = document.getElementsByClassName("dropdown-btn");
+  for (var i = 0; i < dropdown.length; i++) {
+    dropdown[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var dropdownContent = this.nextElementSibling;
+      if (dropdownContent.style.display === "block") {
+        dropdownContent.style.display = "none";
+      } else {
+        dropdownContent.style.display = "block";
+      }
+    });
+  }
+});
+
+function toggleMenu() {
+  var sidebar = document.getElementById("sidebar");
+  sidebar.classList.toggle("active");
+}
+
+</script>
 </html>
