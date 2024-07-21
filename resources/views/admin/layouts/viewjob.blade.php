@@ -4,6 +4,17 @@
     <title>Admin Dash </title>
     
     @include('admin.layouts.head')
+
+    <style>
+        .page-header
+        {
+            background-color: white;
+        }
+        .block
+        {
+            background-color: white;
+        }
+    </style>
   </head>
 
   <body>
@@ -21,45 +32,38 @@
       <div class="page-content">
         <div class="page-header">
           <div class="container-fluid">
-            <h2 class="h5 no-margin-bottom">Dashboard</h2>
+            <div class="title"><strong>View Jobs</strong></div>
           </div>
         </div>
         
         <section class="no-padding-top">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-9">
                 <div class="block margin-bottom-sm">
-                  <div class="title"><strong>Basic Table</strong></div>
                   <div class="table-responsive"> 
                     <table class="table">
                       <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>First Name</th>
-                          <th>Last Name</th>
-                          <th>Username</th>
-                        </tr>
+                            <tr>
+                            <th>Company</th>
+                            <th>Location</th>
+                            <th>Position</th>
+                            <th>Category</th>
+                            <th></th>
+                            <th></th>
+                            </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                        </tr>
+                            @foreach ($job as $job)
+                                <tr>
+                                    <td style="font-weight: bold;">{{$job->company}}</td>
+                                    <td>{{$job->location}}</td>
+                                    <td>{{$job->position}}</td>
+                                    <td>{{$job->category}}</td>
+                                    <td><a class="btn btn-danger" href="{{url('deletejob',$job->id)}}">Delete</a></td>
+                                    <td><a class="btn btn-info" href="{{url('editjob',$job->id)}}">Edit</a></td>
+                                </tr>
+                            @endforeach
                       </tbody>
                     </table>
                   </div>
