@@ -1,10 +1,9 @@
 <nav id="sidebar">
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
-          <div class="avatar"><img src="{{ Auth::user()->profile_photo_url }}" alt="..." class="img-fluid rounded-circle"></div>
           <div class="title">
             <h1 class="h5">{{Auth::user()->name}}</h1>
-            <p>HL Librarian</p>
+            <p>IST Admin</p>
           </div>
         </div>
         <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -13,15 +12,15 @@
                 <a href="/home"><i class="icon-home"></i> Home </a>
             </li>
             <li>
-                <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('category_page') || request()->is('display_category') ? '' : 'collapsed' }}">
-                    <i class="fa fa-tag"></i> Category
+                <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('createjob') || request()->is('display_category') ? '' : 'collapsed' }}">
+                    <i class="fa fa-briefcase"></i> Jobs
                 </a>
                 <ul id="exampledropdownDropdown" class="collapse list-unstyled {{ request()->is('category_page') || request()->is('display_category') ? 'show' : '' }}">
-                    <li class="{{ request()->is('category_page') ? 'active' : '' }}">
-                        <a href="{{ url('category_page') }}">Add Category</a>
+                    <li class="{{ request()->is('createjob') ? 'active' : '' }}">
+                        <a href="{{ url('createjob') }}">Add Job</a>
                     </li>
                     <li class="{{ request()->is('display_category') ? 'active' : '' }}">
-                        <a href="{{ url('display_category') }}">Show Category</a>
+                        <a href="{{ url('display_category') }}">View Job</a>
                     </li>
                 </ul>
             </li>

@@ -37,7 +37,7 @@ Route::middleware([SuperAdmin::class])->group(function () {
 
 Route::middleware([Admin::class])->group(function () {
     Route::get('/createjob', [HomeController::class, 'createjob'])->name('createjob');
-    Route::get('/job_add', [HomeController::class, 'job_add'])->name('job_add');
+    Route::post('/jobcreate', [HomeController::class, 'jobcreate'])->name('jobcreate');
 });
 
 Route::middleware([Alumni::class])->group(function () {

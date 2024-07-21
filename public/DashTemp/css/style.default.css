@@ -416,12 +416,12 @@ nav.navbar {
 }
 
 nav.navbar .sidebar-toggle {
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   line-height: 29px;
   text-align: center;
   border-radius: 50%;
-  background: #ff0000;
+  background: #fff;
   color: #ff0000;
   font-size: 1.1rem;
   border: 0.5px solid #000000;
@@ -729,7 +729,7 @@ nav.navbar .dropdown .dropdown-menu.active {
 nav#sidebar {
   width: 280px;
   /* background: #2d3035; */
-  background: #ff0000;
+  background: #c80000;
   /* color: #6a6c70; */
   color: #000000;
  /* color above is for the texts */
@@ -3163,7 +3163,7 @@ a.bg-dark:focus, a.bg-dark:hover {
 }
 
 .text-primary {
-  color: #DB6574 !important;
+  color: grey !important;
 }
 
 a.text-primary:focus, a.text-primary:hover {

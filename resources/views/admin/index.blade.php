@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head> 
-    <title>Librarian Dash </title>
+    <title>Admin Dash </title>
     
     @include('admin.layouts.head')
   </head>
@@ -27,10 +27,8 @@
         
         @include('admin.layouts.body')
 
-        <footer class="footer">
-          @include('admin.layouts.footer')
-        </footer>
-
+      
+      @include('admin.layouts.footer')
       </div>
     </div>
     
