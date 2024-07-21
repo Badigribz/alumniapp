@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Middleware\Admin;
+use App\Http\Middleware\Alumni;
+use App\Http\Middleware\SuperAdmin;
 
 
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
@@ -27,17 +30,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::group(['middleware' => ['super-admin']], function() {
-    
-// });
 
-// Route::group(['middleware' => ['admin']], function() {
-    
-// });
 
-// Route::group(['middleware' => ['alumni']], function() {
-    
-// });
+Route::middleware([SuperAdmin::class])->group(function () {
+   
+});
+
+Route::middleware([Admin::class])->group(function () {
+    Route::get('/createjob', [HomeController::class, 'createjob'])->name('createjob');
+    Route::post('/jobcreate', [HomeController::class, 'jobcreate'])->name('jobcreate');
+    Route::get('/viewjob', [HomeController::class, 'viewjob'])->name('viewjob');
+});
+
+Route::middleware([Alumni::class])->group(function () {
+   
+});
 
 
 // Route::group(['middleware' => ['role:super-admin|admin']], function() {
