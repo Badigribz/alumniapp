@@ -40,6 +40,9 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('/createjob', [HomeController::class, 'createjob'])->name('createjob');
     Route::post('/jobcreate', [HomeController::class, 'jobcreate'])->name('jobcreate');
     Route::get('/viewjob', [HomeController::class, 'viewjob'])->name('viewjob');
+    Route::get('/deletejob/{id}',[HomeController::class,'deletejob'])->name('deletejob');
+    Route::get('/editjob/{id}',[HomeController::class,'editjob'])->name('editjob');
+    Route::post('/jobedit/{id}',[HomeController::class,'jobedit'])->name('jobedit');
 });
 
 Route::middleware([Alumni::class])->group(function () {

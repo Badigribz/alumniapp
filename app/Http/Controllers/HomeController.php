@@ -71,6 +71,57 @@ class HomeController extends Controller
 
     public function viewjob()
     {
-        return view('admin.layouts.viewjob');
+        $job = Istjob::orderBy('company', 'asc')->get();
+        return view ('admin.layouts.viewjob',compact('job'));
     }
+
+    public function deletejob($id)
+    {
+        $job = Istjob::find($id);
+        $job->delete();
+        return redirect()->back();
+    }
+
+    public function editjob($id)
+    {
+        $job = Istjob::find($id);
+        $qualification = Qualification::find($id);
+        return view('admin.layouts.editjob',compact('job','qualification'));
+    }
+
+    public function jobedit(Request $request, $id)
+    {
+        $job = Istjob::find($id);
+
+        $request->validate([
+            'company' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'category' => 'required|in:Cyber Security,Software Development',
+            'position' => 'required|string|max:255',
+            'experience' => 'required|integer',
+            'qualifications' => 'required|array',
+            'qualifications.*' => 'required|string|max:255',
+        ]);
+
+        $job->update([
+            'company' => $request->company,
+            'location' => $request->location,
+            'description' => $request->description,
+            'category' => $request->category,
+            'position' => $request->position,
+            'experience' => $request->experience,
+        ]);
+
+        // Delete old qualifications
+        $job->qualifications()->delete();
+
+        // Add new qualifications
+        foreach ($request->qualifications as $qualification) {
+            $job->qualifications()->create(['qualification' => $qualification]);
+        }
+
+        return redirect('/viewjob')->with('success', 'Job updated successfully!');
+    }
+
 }
