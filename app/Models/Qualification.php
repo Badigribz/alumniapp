@@ -10,7 +10,7 @@ class Qualification extends Model
     use HasFactory;
 
     protected $fillable = [
-        'job_id',
+        'itsjob_id',
         'qualification',
     ];
 

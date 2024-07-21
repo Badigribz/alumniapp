@@ -12,15 +12,15 @@
                 <a href="/home"><i class="icon-home"></i> Home </a>
             </li>
             <li>
-                <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('createjob') || request()->is('display_category') ? '' : 'collapsed' }}">
+                <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('createjob') || request()->is('viewjob') ? '' : 'collapsed' }}">
                     <i class="fa fa-briefcase"></i> Jobs
                 </a>
-                <ul id="exampledropdownDropdown" class="collapse list-unstyled {{ request()->is('category_page') || request()->is('display_category') ? 'show' : '' }}">
+                <ul id="exampledropdownDropdown" class="collapse list-unstyled {{ request()->is('createjob') || request()->is('viewjob') ? 'show' : '' }}">
                     <li class="{{ request()->is('createjob') ? 'active' : '' }}">
                         <a href="{{ url('createjob') }}">Add Job</a>
                     </li>
-                    <li class="{{ request()->is('display_category') ? 'active' : '' }}">
-                        <a href="{{ url('display_category') }}">View Job</a>
+                    <li class="{{ request()->is('viewjob') ? 'active' : '' }}">
+                        <a href="{{ url('viewjob') }}">View Job</a>
                     </li>
                 </ul>
             </li>

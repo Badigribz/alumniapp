@@ -43,39 +43,34 @@ class HomeController extends Controller
     public function jobcreate(Request $request)
     {
         // Validate input
-        $validator = Validator::make($request->all(), [
+        $request -> validate([
             'company' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'category' => 'required|in:Cyber Security,Software Development',
             'position' => 'required|string|max:255',
             'experience' => 'required|integer',
-            
-            
-            'qualification' => 'required|exists:qualifications,id',
+            'qualifications' => 'required|array',
+            'qualifications.*' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $job = new Istjob;
-        $job->company = $request->input('company');
-        $job->location = $request->input('location');
-        $job->description = $request->input('description');
-        $job->category = $request->input('category');
-        $job->position = $request->input('position');
+        $job = Istjob::create([
+            'company' => $request->company,
+            'location' => $request->location,
+            'description' => $request->description,
+            'category' => $request->category,
+            'position' => $request->position,
+            'experience' => $request->experience,
+        ]);
         
-        $job->save();
-
-        // Save qualifications
-        foreach ($request->input('qualifications') as $qualification) {
-        $qualification = new Qualification;
-        $qualification->job_id = $job->id;
-        $qualification->qualification = $qualification;
-        $qualification->save();
+        foreach ($request->qualifications as $qualification) {
+            $job->qualifications()->create(['qualification' => $qualification]);
+        }
+        return redirect()->back();
     }
 
-    return redirect()->back()->with('success', 'Job created successfully!');
+    public function viewjob()
+    {
+        return view('admin.layouts.viewjob');
     }
 }

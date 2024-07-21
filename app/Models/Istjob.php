@@ -16,7 +16,6 @@ class Istjob extends Model
         'category',
         'position',
         'experience',
-        'qualifications_id',
     ];
 
     public function qualifications()
