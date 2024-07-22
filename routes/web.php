@@ -47,7 +47,7 @@ Route::middleware([Admin::class])->group(function () {
 
 Route::middleware([Alumni::class])->group(function () {
     Route::get('/viewposting', [HomeController::class, 'viewposting'])->name('viewposting');
-    Route::get('postview', [HomeController::class, 'postview'])->name('postview');
+    Route::get('/postview', [HomeController::class, 'postview'])->name('postview');
 
 });
 
