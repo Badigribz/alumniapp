@@ -4,12 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+ Route::get('/', function () {
+    return view('welcome');
+ });
 
-//put this route and imported it above in an attempt to change the beginning page to login directly 
-Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
+//put this route and imported it above in an attempt to change the beginning page to login directly
+//Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
 //
 
 Route::get('/dashboard', function () {
