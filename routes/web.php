@@ -1,26 +1,56 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Middleware\Admin;
+use App\Http\Middleware\Alumni;
+use App\Http\Middleware\SuperAdmin;
+
+
+Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
+
+//put this route and imported it above in an attempt to change the beginning page to login directly
 
  Route::get('/', function () {
     return view('welcome');
  });
 
-//put this route and imported it above in an attempt to change the beginning page to login directly
-//Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
 //
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+Route::middleware([SuperAdmin::class])->group(function () {
+
+});
+
+Route::middleware([Admin::class])->group(function () {
+    Route::get('/createjob', [HomeController::class, 'createjob'])->name('createjob');
+    Route::post('/jobcreate', [HomeController::class, 'jobcreate'])->name('jobcreate');
+    Route::get('/viewjob', [HomeController::class, 'viewjob'])->name('viewjob');
+    Route::get('/deletejob/{id}',[HomeController::class,'deletejob'])->name('deletejob');
+    Route::get('/editjob/{id}',[HomeController::class,'editjob'])->name('editjob');
+    Route::post('/jobedit/{id}',[HomeController::class,'jobedit'])->name('jobedit');
+});
+
+Route::middleware([Alumni::class])->group(function () {
+    Route::get('/viewposting', [HomeController::class, 'viewposting'])->name('viewposting');
+    Route::get('postview', [HomeController::class, 'postview'])->name('postview');
+
+});
+
 
 // Route::group(['middleware' => ['role:super-admin|admin']], function() {
 
@@ -39,5 +69,6 @@ Route::middleware('auth')->group(function () {
 
 // });
 
+Route::post('/updateRole/{id}', [HomeController::class, 'updateRole'])->name('updateRole');
 
 require __DIR__.'/auth.php';
