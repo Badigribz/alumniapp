@@ -2,25 +2,26 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Alumni;
 use App\Http\Middleware\SuperAdmin;
-
+use Spatie\Permission\Models\Role;
 
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
 
-//put this route and imported it above in an attempt to change the beginning page to login directly 
+//put this route and imported it above in an attempt to change the beginning page to login directly
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+ Route::get('/', function () {
+    return view('welcome');
+ });
 
-Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
+//Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
 //
 
-// Route::get('/dashboard', function () { 
+// Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -33,7 +34,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware([SuperAdmin::class])->group(function () {
-   
+
 });
 
 Route::middleware([Admin::class])->group(function () {
@@ -69,6 +70,23 @@ Route::middleware([Alumni::class])->group(function () {
 
 // });
 
+
+
 Route::post('/updateRole/{id}', [HomeController::class, 'updateRole'])->name('updateRole');
+
+
+
+
+// Routes for users
+Route::get('/users', [UserController::class, 'index'])->middleware('permission:view-user')->name('viewuser');
+Route::get('/add/users', function () {
+    $roles = Role::all();
+    return view('super.layouts.adduser', compact('roles'));
+})->middleware('permission:create-user')->name('adduser');
+Route::post('/add/users', [UserController::class, 'store'])->middleware('permission:create-user')->name('createuser');
+Route::get('/edit/users/{user}', [UserController::class, 'edit'])->middleware('permission:update-user')->name('edituser');
+Route::put('/update/users/{user}', [UserController::class, 'update'])->middleware('permission:update-user')->name('updateuser');
+Route::delete('/delete/users/{user}', [UserController::class, 'destroy'])->middleware('permission:delete-user')->name('deleteuser');
+
 
 require __DIR__.'/auth.php';
