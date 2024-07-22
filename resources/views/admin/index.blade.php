@@ -4,6 +4,13 @@
     <title>Admin Dash </title>
     
     @include('admin.layouts.head')
+
+    <style>
+      .page-header
+      {
+        background-color: #eeeeee;
+      }
+    </style>
   </head>
 
   <body>
