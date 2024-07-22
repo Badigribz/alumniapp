@@ -140,4 +140,22 @@ class HomeController extends Controller
         return redirect('/viewjob')->with('success', 'Job updated successfully!');
     }
 
+    public function viewposting()
+    {
+        return view('alumni.layouts.view_post');
+    }
+
+    public function postview(Request $request)
+    {
+        $category = $request->query('category');
+        
+        if ($category) {
+            $jobs = Istjob::where('category', $category)->get();
+        } else {
+            $jobs = Istjob::all();
+        }
+
+        return view('alumni.layouts.postview', compact('jobs', 'category'));
+    }
+
 }

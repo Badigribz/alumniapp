@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head> 
-    <title>Librarian Dash </title>
+    <title>Alumni Dash </title>
     
-    @include('alumni.layouts.head')
+    @include('admin.layouts.head')
+
+    <style>
+      .page-header
+      {
+        background-color: #eeeeee;
+      }
+    </style>
   </head>
 
   <body>
@@ -27,10 +34,8 @@
         
         @include('alumni.layouts.body')
 
-        <footer class="footer">
-          @include('alumni.layouts.footer')
-        </footer>
-
+      
+      @include('alumni.layouts.footer')
       </div>
     </div>
     

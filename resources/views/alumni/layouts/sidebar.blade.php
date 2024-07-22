@@ -1,10 +1,9 @@
 <nav id="sidebar">
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
-          <div class="avatar"><img src="{{ Auth::user()->profile_photo_url }}" alt="..." class="img-fluid rounded-circle"></div>
           <div class="title">
             <h1 class="h5">{{Auth::user()->name}}</h1>
-            <p>HL Librarian</p>
+            <p>IST Alumni</p>
           </div>
         </div>
         <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -13,42 +12,20 @@
                 <a href="/home"><i class="icon-home"></i> Home </a>
             </li>
             <li>
-                <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('category_page') || request()->is('display_category') ? '' : 'collapsed' }}">
-                    <i class="fa fa-tag"></i> Category
+                <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('createport') || request()->is('viewport') ? '' : 'collapsed' }}">
+                    <i class="fas fa-user-tie"></i> My Portfolio
                 </a>
-                <ul id="exampledropdownDropdown" class="collapse list-unstyled {{ request()->is('category_page') || request()->is('display_category') ? 'show' : '' }}">
-                    <li class="{{ request()->is('category_page') ? 'active' : '' }}">
-                        <a href="{{ url('category_page') }}">Add Category</a>
+                <ul id="exampledropdownDropdown" class="collapse list-unstyled {{ request()->is('createport') || request()->is('viewport') ? 'show' : '' }}">
+                    <li class="{{ request()->is('createport') ? 'active' : '' }}">
+                        <a href="{{ url('createport') }}">Add Portfolio</a>
                     </li>
-                    <li class="{{ request()->is('display_category') ? 'active' : '' }}">
-                        <a href="{{ url('display_category') }}">Show Category</a>
+                    <li class="{{ request()->is('viewport') ? 'active' : '' }}">
+                        <a href="{{ url('viewport') }}">View Portfolio</a>
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="#examplebookdropdownDropdown" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('add_book') || request()->is('display_book') ? '' : 'collapsed' }}">
-                    <i class="fa fa-book"></i> Books
-                </a>
-                <ul id="examplebookdropdownDropdown" class="collapse list-unstyled {{ request()->is('add_book') || request()->is('display_book') ? 'show' : '' }}">
-                    <li class="{{ request()->is('add_book') ? 'active' : '' }}">
-                        <a href="{{ url('add_book') }}">Add Book</a>
-                    </li>
-                    <li class="{{ request()->is('display_book') ? 'active' : '' }}">
-                        <a href="{{ url('display_book') }}">Show Books</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="{{ request()->is('borrow_request') ? 'active' : '' }}">
-                <a href="{{ url('borrow_request') }}"><i class="fas fa-paper-plane"></i> Borrow Requests</a>
-            </li>
-            <li class="{{ request()->is('extension_request') ? 'active' : '' }}">
-                <a href="{{ url('extension_request') }}"><i class="fas fa-clock-o"></i> Extension Requests</a>
-            </li>
-            <li class="{{ request()->is('reservation_request') ? 'active' : '' }}">
-                <a href="{{ url('reservation_request') }}"><i class="fas fa-calendar-check-o"></i> Reservation Requests</a>
-            </li>
-            <li class="{{ request()->is('fines_page') ? 'active' : '' }}">
-                <a href="{{ url('fines_page') }}"><i class="fas fa-exclamation-circle"></i> Penalty Management </a>
+            <li class="{{ request()->is('viewposting') ? 'active' : '' }}">
+                <a href="{{ url('viewposting') }}"><i class="fas fa-briefcase"></i> Jobs </a>
             </li>
         </ul><span class="heading">Extras</span>
         
