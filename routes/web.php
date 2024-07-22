@@ -42,11 +42,13 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('/deletejob/{id}',[HomeController::class,'deletejob'])->name('deletejob');
     Route::get('/editjob/{id}',[HomeController::class,'editjob'])->name('editjob');
     Route::post('/jobedit/{id}',[HomeController::class,'jobedit'])->name('jobedit');
+
 });
 
 Route::middleware([Alumni::class])->group(function () {
     Route::get('/viewposting', [HomeController::class, 'viewposting'])->name('viewposting');
     Route::get('postview', [HomeController::class, 'postview'])->name('postview');
+    Route::get('jobdesc/{id}', [HomeController::class, 'jobdesc'])->name('jobdesc');
 
 });
 

@@ -142,4 +142,10 @@ class HomeController extends Controller
         return view('alumni.layouts.postview', compact('jobs', 'category'));
     }
 
+    public function jobdesc($id)
+    {
+        $job = Istjob::with('qualifications')->findOrFail($id);
+        return view('alumni.layouts.jobdesc', compact('job'));
+    }
+
 }

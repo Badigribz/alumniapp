@@ -55,7 +55,7 @@
                                         <td>{{$job->location}}</td>
                                         <td>{{$job->position}}</td>
                                         <td>{{$job->experience}}</td>
-                                        <td><a class="btn btn-warning" href="">More Info</a></td>
+                                        <td><a class="btn btn-warning" href="{{url('jobdesc',$job->id)}}">More Info</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
