@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head> 
+  <head>
     <title>Super admin Dash </title>
-    
+
     @include('super.layouts.head')
   </head>
 
   <body>
 
-    <header class="header">   
+    <header class="header">
       @include('super.layouts.navbar')
     </header>
 
@@ -24,7 +24,7 @@
             <h2 class="h5 no-margin-bottom">Dashboard</h2>
           </div>
         </div>
-        
+
         @include('super.layouts.body')
 
         <footer class="footer">
@@ -33,7 +33,7 @@
 
       </div>
     </div>
-    
+
     @include('super.layouts.script')
 
   </body>

@@ -13,25 +13,19 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if (Auth::id())
-        {
-            $user_type = Auth()->user()->usertype;
+        $user = Auth::user(); // Get the currently authenticated user
 
-            if ($user_type == 'super-admin') 
-            {   
-                $user = User::all();
-                return view('super.index', compact('user'));
-            }
-            elseif ($user_type == 'alumni') 
-            {
+        if ($user) {
+            // Check user roles and redirect accordingly
+            if ($user->hasRole('superuser')) {
+                $users = User::all(); // Fetch all users
+                return view('super.index', compact('users'));
+            } elseif ($user->hasRole('alumni')) {
                 return view('alumni.index');
-            }
-            elseif ($user_type == 'admin') 
-            {
+            } elseif ($user->hasRole('admin')) {
                 return view('admin.index');
-            }
-            else {
-                return redirect()->back();
+            } else {
+                return redirect()->route('home')->with('error', 'Unauthorized access');
             }
         }
     }
@@ -78,7 +72,7 @@ class HomeController extends Controller
             'position' => $request->position,
             'experience' => $request->experience,
         ]);
-        
+
         foreach ($request->qualifications as $qualification) {
             $job->qualifications()->create(['qualification' => $qualification]);
         }
@@ -148,7 +142,7 @@ class HomeController extends Controller
     public function postview(Request $request)
     {
         $category = $request->query('category');
-        
+
         if ($category) {
             $jobs = Istjob::where('category', $category)->get();
         } else {
