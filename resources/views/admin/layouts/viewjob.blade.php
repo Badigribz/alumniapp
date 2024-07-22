@@ -69,9 +69,8 @@
                   </div>
                 </div>
               </div>
-
-      
-      @include('admin.layouts.footer')
+      </section>
+       @include('admin.layouts.footer')
       </div>
     </div>
     

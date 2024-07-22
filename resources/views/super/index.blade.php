@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head> 
-    <title>Librarian Dash </title>
+    <title>Super admin Dash </title>
     
     @include('super.layouts.head')
   </head>

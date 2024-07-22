@@ -67,5 +67,6 @@ Route::middleware([Alumni::class])->group(function () {
 
 // });
 
+Route::post('/updateRole/{id}', [HomeController::class, 'updateRole'])->name('updateRole');
 
 require __DIR__.'/auth.php';

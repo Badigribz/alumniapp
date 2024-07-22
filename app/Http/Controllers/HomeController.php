@@ -18,8 +18,9 @@ class HomeController extends Controller
             $user_type = Auth()->user()->usertype;
 
             if ($user_type == 'super-admin') 
-            {
-                return view('super.index');
+            {   
+                $user = User::all();
+                return view('super.index', compact('user'));
             }
             elseif ($user_type == 'alumni') 
             {
@@ -33,6 +34,21 @@ class HomeController extends Controller
                 return redirect()->back();
             }
         }
+    }
+
+    public function updateRole(Request $request, $id)
+    {
+
+        $user = User::find($id);
+
+        if ($user) {
+            $user->usertype = $request->usertype;
+            $user->save();
+            // notify()->success('User type has been updated successfully');
+        } else {
+            // notify()->error('User not found');
+        }
+        return redirect('/home');
     }
 
     public function createjob()
