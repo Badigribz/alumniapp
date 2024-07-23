@@ -14,11 +14,11 @@ Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name(
 
 //put this route and imported it above in an attempt to change the beginning page to login directly
 
- Route::get('/', function () {
-    return view('welcome');
- });
+//  Route::get('/', function () {
+//     return view('welcome');
+//  });
 
-//Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
 //
 
 // Route::get('/dashboard', function () {
@@ -38,7 +38,6 @@ Route::middleware([SuperAdmin::class])->group(function () {
 });
 
 Route::middleware([Admin::class])->group(function () {
-    Route::get('/createjob', [HomeController::class, 'createjob'])->name('createjob');
     Route::post('/jobcreate', [HomeController::class, 'jobcreate'])->name('jobcreate');
     Route::get('/viewjob', [HomeController::class, 'viewjob'])->name('viewjob');
     Route::get('/deletejob/{id}',[HomeController::class,'deletejob'])->name('deletejob');
@@ -48,7 +47,7 @@ Route::middleware([Admin::class])->group(function () {
 
 Route::middleware([Alumni::class])->group(function () {
     Route::get('/viewposting', [HomeController::class, 'viewposting'])->name('viewposting');
-    Route::get('/postview', [HomeController::class, 'postview'])->name('postview');
+    Route::get('postview', [HomeController::class, 'postview'])->name('postview');
 
 });
 
@@ -87,6 +86,7 @@ Route::post('/add/users', [UserController::class, 'store'])->middleware('permiss
 Route::get('/edit/users/{user}', [UserController::class, 'edit'])->middleware('permission:update-user')->name('edituser');
 Route::put('/update/users/{user}', [UserController::class, 'update'])->middleware('permission:update-user')->name('updateuser');
 Route::delete('/delete/users/{user}', [UserController::class, 'destroy'])->middleware('permission:delete-user')->name('deleteuser');
+Route::get('/createjob', [HomeController::class, 'createjob'])->middleware('permission:create-job')->name('createjob');
 
 
 require __DIR__.'/auth.php';

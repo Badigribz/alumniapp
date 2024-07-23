@@ -24,8 +24,12 @@ class HomeController extends Controller
                 return view('alumni.index');
             } elseif ($user->hasRole('admin')) {
                 return view('admin.index');
-            } else {
-                return redirect()->route('home')->with('error', 'Unauthorized access');
+            } elseif ($user->hasRole('employer')) {
+                return view('employer.index');
+            }else {
+               // return redirect()->route('home')->with('error', 'Unauthorized access');
+               Auth::logout();
+               return redirect()->route('login')->with('error', 'Unauthorized access');
             }
         }
     }
