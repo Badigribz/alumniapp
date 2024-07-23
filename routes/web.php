@@ -49,7 +49,7 @@ Route::middleware([Alumni::class])->group(function () {
     Route::get('/viewposting', [HomeController::class, 'viewposting'])->name('viewposting');
     Route::get('postview', [HomeController::class, 'postview'])->name('postview');
     Route::get('jobdesc/{id}', [HomeController::class, 'jobdesc'])->name('jobdesc');
-
+    Route::get('viewport', [HomeController::class, 'viewport'])->name('viewport');
 });
 
 

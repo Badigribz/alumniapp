@@ -148,4 +148,8 @@ class HomeController extends Controller
         return view('alumni.layouts.jobdesc', compact('job'));
     }
 
+    public function viewport()
+    {
+        return view('alumni.layouts.viewport');
+    }
 }
