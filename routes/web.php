@@ -49,7 +49,13 @@ Route::middleware([Alumni::class])->group(function () {
     Route::get('/viewposting', [HomeController::class, 'viewposting'])->name('viewposting');
     Route::get('postview', [HomeController::class, 'postview'])->name('postview');
     Route::get('jobdesc/{id}', [HomeController::class, 'jobdesc'])->name('jobdesc');
-    Route::get('viewport', [HomeController::class, 'viewport'])->name('viewport');
+    Route::get('/viewport', [HomeController::class, 'viewport'])->name('viewport');
+    Route::get('addport', [HomeController::class, 'addport'])->name('addport');
+    Route::post('/portadd', [HomeController::class, 'portadd'])->name('portadd');
+    Route::delete('/deleteport/{id}', [HomeController::class, 'deleteport'])->name('deleteport');
+    Route::get('/editport/{id}', [HomeController::class, 'editport'])->name('editport');
+    Route::put('/portedit/{id}', [HomeController::class, 'portedit'])->name('portedit');
+    Route::get('myportfolio', [HomeController::class, 'myportfolio'])->name('myportfolio');
 });
 
 
