@@ -40,8 +40,8 @@
             }
             .tile img
             {
-            height:100%;
-            width:100%;
+            height:auto;
+            width:auto;
             position:absolute;
             top:0;
             left:0;
@@ -159,7 +159,7 @@
           <div class="container-fluid">
             <div class="wrap">
                 <div class="tile">
-                    <img src="">
+                    <img src="{{asset('images/software.png')}}">
                     <div class="text">
                         <h1>Software Development</h1>
                         <br><br><br><br><br>
@@ -168,7 +168,7 @@
                 </div>
 
                 <div class="tile">
-                    <img src="">
+                    <img src="{{asset('images/cyber.jpg')}}">
                     <div class="text">
                         <h1>Cyber Security</h1>
                         <br><br><br><br><br>

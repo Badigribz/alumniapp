@@ -12,12 +12,12 @@
                 <a href="/home"><i class="icon-home"></i> Home </a>
             </li>
             <li>
-                <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('createport') || request()->is('viewport') ? '' : 'collapsed' }}">
+                <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('addport') || request()->is('viewport') ? '' : 'collapsed' }}">
                     <i class="fas fa-user-tie"></i> My Portfolio
                 </a>
-                <ul id="exampledropdownDropdown" class="collapse list-unstyled {{ request()->is('createport') || request()->is('viewport') ? 'show' : '' }}">
-                    <li class="{{ request()->is('createport') ? 'active' : '' }}">
-                        <a href="{{ url('createport') }}">Add Portfolio</a>
+                <ul id="exampledropdownDropdown" class="collapse list-unstyled {{ request()->is('addport') || request()->is('viewport') ? 'show' : '' }}">
+                    <li class="{{ request()->is('addport') ? 'active' : '' }}">
+                        <a href="{{ url('addport') }}">Add Portfolio</a>
                     </li>
                     <li class="{{ request()->is('viewport') ? 'active' : '' }}">
                         <a href="{{ url('viewport') }}">View Portfolio</a>
