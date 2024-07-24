@@ -4,6 +4,7 @@
     <title> Add Job Posting</title>
     
     @include('admin.layouts.head')
+    @include('admin.layouts.style')
     <style>
         .page-header
         {
