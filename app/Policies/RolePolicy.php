@@ -9,6 +9,7 @@ class RolePolicy
 {
     public function view(User $user)
     {
+
         return $user->can('view-role');
     }
 
