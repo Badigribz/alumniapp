@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Middleware\Admin;
@@ -97,5 +99,21 @@ Route::put('/update/users/{user}', [UserController::class, 'update'])->middlewar
 Route::delete('/delete/users/{user}', [UserController::class, 'destroy'])->middleware('permission:delete-user')->name('deleteuser');
 Route::get('/createjob', [HomeController::class, 'createjob'])->middleware('permission:create-job')->name('createjob');
 
+
+//Routes for roles
+Route::get('/roles', [RoleController::class, 'index'])->middleware('permission:view-role')->name('viewrole');
+Route::get('/add/roles', [RoleController::class, 'create'])->middleware('permission:create-role')->name('createrole');
+Route::post('/add/roles', [RoleController::class, 'store'])->middleware('permission:create-role')->name('storerole');
+Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->middleware('permission:update-role')->name('editrole');
+Route::put('/roles/{role}', [RoleController::class, 'update'])->middleware('permission:update-role')->name('updaterole');
+Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->middleware('permission:delete-role')->name('deleterole');
+
+//Routes for permissions
+Route::get('/permissions', [PermissionController::class, 'index'])->middleware('permission:view-permission')->name('viewpermission');
+Route::get('/add/permissions', [PermissionController::class, 'create'])->middleware('permission:create-permission')->name('createpermission');
+Route::post('/add/permissions', [PermissionController::class, 'store'])->middleware('permission:create-permission')->name('storepermission');
+Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->middleware('permission:update-permission')->name('editpermission');
+Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->middleware('permission:update-permission')->name('updatepermission');
+Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->middleware('permission:delete-permission')->name('deletepermission');
 
 require __DIR__.'/auth.php';

@@ -33,6 +33,46 @@
             </ul>
         </li>
     @endcan
+
+    @can('view-role')
+    <li>
+        <a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('createrole') || request()->is('viewrole') ? '' : 'collapsed' }}">
+            <i class="fa fa-user-plus"></i> Roles
+        </a>
+        <ul id="exampledropdownDropdown1" class="collapse list-unstyled {{ request()->is('add/roles') || request()->is('roles') ? 'show' : '' }}">
+            @can('create-role') <!-- Check if the user has permission to create jobs -->
+                <li class="{{ request()->is('/add/roles') ? 'active' : '' }}">
+                    <a href="{{ route('createrole') }}">Add Role</a>
+                </li>
+            @endcan
+            @can('view-role') <!-- Check if the user has permission to view jobs -->
+                <li class="{{ request()->is('roles') ? 'active' : '' }}">
+                    <a href="{{ route('viewrole') }}">View Roles</a>
+                </li>
+            @endcan
+        </ul>
+    </li>
+    @endcan
+
+    @can('view-permission')
+    <li>
+        <a href="#exampledropdownDropdown2" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('createpermission') || request()->is('viewpermission') ? '' : 'collapsed' }}">
+            <i class="fa fa-check-circle"></i> Permissions
+        </a>
+        <ul id="exampledropdownDropdown2" class="collapse list-unstyled {{ request()->is('add/permissions') || request()->is('permissions') ? 'show' : '' }}">
+            @can('create-permission') <!-- Check if the user has permission to create jobs -->
+                <li class="{{ request()->is('/add/permissions') ? 'active' : '' }}">
+                    <a href="{{ route('createpermission') }}">Add Permission</a>
+                </li>
+            @endcan
+            @can('view-permission') <!-- Check if the user has permission to view jobs -->
+                <li class="{{ request()->is('permissions') ? 'active' : '' }}">
+                    <a href="{{ route('viewpermission') }}">View Permissions</a>
+                </li>
+            @endcan
+        </ul>
+    </li>
+    @endcan
 </ul>
 
 <span class="heading">Extras</span>
