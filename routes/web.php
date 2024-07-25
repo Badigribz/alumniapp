@@ -21,7 +21,7 @@ Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name(
 //  });
 
 Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
-//
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
