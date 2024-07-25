@@ -17,14 +17,13 @@ class HomeController extends Controller
 
         if ($user) {
             // Check user roles and redirect accordingly
-            if ($user->hasRole('superuser')) {
+            if ($user->hasRole('superuser') || $user->hasRole('admin')) {
                 $users = User::all(); // Fetch all users
                 return view('super.index', compact('users'));
-            } elseif ($user->hasRole('alumni')) {
+            }
+             elseif ($user->hasRole('alumni')) {
                 return view('alumni.index');
-            } elseif ($user->hasRole('admin')) {
-                return view('admin.index');
-            } else {
+            }  else {
                 return redirect()->route('home')->with('error', 'Unauthorized access');
             }
         }

@@ -86,8 +86,9 @@
                                   <thead>
                                       <tr>
                                           <th>Name</th>
-
+                                         @can('update-permission' || 'delete-permission')
                                           <th>Action</th>
+                                          @endcan
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -95,12 +96,16 @@
                                         <tr>
                                             <td>{{ $permission->name }}</td>
                                             <td>
+                                            @can('update-permission')
                                                 <a href="{{ route('editpermission', $permission->id) }}" class="btn btn-warning">Edit</a>
+                                            @endcan
+                                             @can('delete-permission')
                                                 <form action="{{ route('deletepermission', $permission->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
+                                            @endcan
                                             </td>
                                         </tr>
                                     @endforeach

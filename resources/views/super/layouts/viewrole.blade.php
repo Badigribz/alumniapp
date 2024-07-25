@@ -94,12 +94,16 @@
                                         <tr>
                                             <td>{{ $role->name }}</td>
                                             <td>
+                                            @can('update-role')
                                                 <a href="{{ route('editrole', $role->id) }}" class="btn btn-warning">Edit</a>
+                                            @endcan
+                                            @can('delete-role')
                                                 <form action="{{ route('deleterole', $role->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
+                                            @endcan
                                             </td>
                                         </tr>
                                     @endforeach
