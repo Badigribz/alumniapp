@@ -22,63 +22,33 @@ Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name(
 
 Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
 
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
 Route::middleware([SuperAdmin::class])->group(function () {
 
 });
 
-Route::middleware([Admin::class])->group(function () {
-    Route::get('/createjob', [HomeController::class, 'createjob'])->name('createjob');
-    Route::post('/jobcreate', [HomeController::class, 'jobcreate'])->name('jobcreate');
-    Route::get('/viewjob', [HomeController::class, 'viewjob'])->name('viewjob');
-    Route::get('/deletejob/{id}',[HomeController::class,'deletejob'])->name('deletejob');
-    Route::get('/editjob/{id}',[HomeController::class,'editjob'])->name('editjob');
-    Route::post('/jobedit/{id}',[HomeController::class,'jobedit'])->name('jobedit');
 
-});
-
-Route::middleware([Alumni::class])->group(function () {
-    Route::get('/viewposting', [HomeController::class, 'viewposting'])->name('viewposting');
-    Route::get('postview', [HomeController::class, 'postview'])->name('postview');
-    Route::get('jobdesc/{id}', [HomeController::class, 'jobdesc'])->name('jobdesc');
-    Route::get('/viewport', [HomeController::class, 'viewport'])->name('viewport');
-    Route::get('addport', [HomeController::class, 'addport'])->middleware('permission:create-portfolio')->name('addport');
-    Route::post('/portadd', [HomeController::class, 'portadd'])->middleware('permission:create-portfolio')->name('portadd');
-    Route::delete('/deleteport/{id}', [HomeController::class, 'deleteport'])->name('deleteport');
-    Route::get('/editport/{id}', [HomeController::class, 'editport'])->name('editport');
-    Route::put('/portedit/{id}', [HomeController::class, 'portedit'])->name('portedit');
-    Route::get('myportfolio', [HomeController::class, 'myportfolio'])->name('myportfolio');
-});
-
-
-// Route::group(['middleware' => ['role:super-admin|admin']], function() {
-
-//     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
-
-//     Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class, 'destroy']);
-
-
-//     Route::resource('roles', App\Http\Controllers\RoleController::class);
-//     Route::get('roles/{roleId}/delete', [App\Http\Controllers\RoleController::class, 'destroy']);
-//     Route::get('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'addPermissionToRole']);
-//     Route::put('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'givePermissionToRole']);
-
-//     Route::resource('users', App\Http\Controllers\UserController::class);
-//     Route::get('users/{userId}/delete', [App\Http\Controllers\UserController::class, 'destroy']);
-
-// });
+Route::get('/createjob', [HomeController::class, 'createjob'])->middleware('permission:create-job')->name('createjob');
+Route::post('/jobcreate', [HomeController::class, 'jobcreate'])->middleware('permission:create-job')->name('jobcreate');
+Route::get('/viewjob', [HomeController::class, 'viewjob'])->middleware('permission:view-job')->name('viewjob');
+Route::get('/deletejob/{id}',[HomeController::class,'deletejob'])->middleware('permission:delete-job')->name('deletejob');
+Route::get('/editjob/{id}',[HomeController::class,'editjob'])->middleware('permission:update-job')->name('editjob');
+Route::post('/jobedit/{id}',[HomeController::class,'jobedit'])->middleware('permission:update-job')->name('jobedit');
+Route::get('/viewposting', [HomeController::class, 'viewposting'])->middleware('permission:view-job-postings')->name('viewposting');
+Route::get('postview', [HomeController::class, 'postview'])->middleware('permission:view-job-postings')->name('postview');
+Route::get('jobdesc/{id}', [HomeController::class, 'jobdesc'])->middleware('permission:view-job-postings')->name('jobdesc');
+Route::get('/viewport', [HomeController::class, 'viewport'])->middleware('permission:view-portfolio')->name('viewport');
+Route::get('addport', [HomeController::class, 'addport'])->middleware('permission:create-portfolio')->name('addport');
+Route::post('/portadd', [HomeController::class, 'portadd'])->middleware('permission:create-portfolio')->name('portadd');
+Route::delete('/deleteport/{id}', [HomeController::class, 'deleteport'])->middleware('permission:delete-portfolio')->name('deleteport');
+Route::get('/editport/{id}', [HomeController::class, 'editport'])->middleware('permission:edit-portfolio')->name('editport');
+Route::put('/portedit/{id}', [HomeController::class, 'portedit'])->middleware('permission:edit-portfolio')->name('portedit');
+Route::get('myportfolio', [HomeController::class, 'myportfolio'])->middleware('permission:myportfolio')->name('myportfolio');
 
 
 
@@ -97,7 +67,6 @@ Route::post('/add/users', [UserController::class, 'store'])->middleware('permiss
 Route::get('/edit/users/{user}', [UserController::class, 'edit'])->middleware('permission:update-user')->name('edituser');
 Route::put('/update/users/{user}', [UserController::class, 'update'])->middleware('permission:update-user')->name('updateuser');
 Route::delete('/delete/users/{user}', [UserController::class, 'destroy'])->middleware('permission:delete-user')->name('deleteuser');
-Route::get('/createjob', [HomeController::class, 'createjob'])->middleware('permission:create-job')->name('createjob');
 
 
 //Routes for roles

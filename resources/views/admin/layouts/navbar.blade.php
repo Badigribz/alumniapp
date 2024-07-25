@@ -10,6 +10,13 @@
           {
             cursor: pointer;
           }
+          .sidebar-toggle::before 
+          {
+            content: "\f0c9"; /* Unicode for the 'bars' icon */
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900; /* Ensure the correct font weight */
+            margin-right: 8px; /* Optional: Add some space between the icon and the text */
+          }
         </style>
       </head>
       <body>
