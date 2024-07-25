@@ -55,8 +55,6 @@ Route::get('myportfolio', [HomeController::class, 'myportfolio'])->middleware('p
 Route::post('/updateRole/{id}', [HomeController::class, 'updateRole'])->name('updateRole');
 
 
-
-
 // Routes for users
 Route::get('/users', [UserController::class, 'index'])->middleware('permission:view-user')->name('viewuser');
 Route::get('/add/users', function () {
