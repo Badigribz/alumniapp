@@ -49,6 +49,7 @@ Route::delete('/deleteport/{id}', [HomeController::class, 'deleteport'])->middle
 Route::get('/editport/{id}', [HomeController::class, 'editport'])->middleware('permission:edit-portfolio')->name('editport');
 Route::put('/portedit/{id}', [HomeController::class, 'portedit'])->middleware('permission:edit-portfolio')->name('portedit');
 Route::get('myportfolio', [HomeController::class, 'myportfolio'])->middleware('permission:myportfolio')->name('myportfolio');
+Route::get('search_job', [HomeController::class, 'search_job'])->middleware('permission:search-job')->name('search_job');
 
 
 
@@ -62,6 +63,8 @@ Route::get('/add/users', function () {
     return view('super.layouts.adduser', compact('roles'));
 })->middleware('permission:create-user')->name('adduser');
 Route::post('/add/users', [UserController::class, 'store'])->middleware('permission:create-user')->name('createuser');
+Route::post('/uploadjson', [UserController::class, 'uploadJSON'])->middleware('permission:create-user')->name('uploadjson');
+Route::get('portfolio/download-cv/{id}', [HomeController::class, 'downloadCv'])->name('portfolio.downloadCv');
 Route::get('/edit/users/{user}', [UserController::class, 'edit'])->middleware('permission:update-user')->name('edituser');
 Route::put('/update/users/{user}', [UserController::class, 'update'])->middleware('permission:update-user')->name('updateuser');
 Route::delete('/delete/users/{user}', [UserController::class, 'destroy'])->middleware('permission:delete-user')->name('deleteuser');

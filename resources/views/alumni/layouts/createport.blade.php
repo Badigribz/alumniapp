@@ -31,7 +31,7 @@
                     <div class="col-lg-12">
                     <div class="block">
                             <div class="block-body">
-                            <form method="post" action="{{ url('portadd') }}">
+                            <form method="post" action="{{ url('portadd') }}"enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label>Name</label>
@@ -51,14 +51,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label>About Me</label>
-                                    <textarea name="about_me" class="form-control" maxlength="50" required>{{ old('about_me') }}</textarea>
+                                    <textarea name="about_me" class="form-control" required>{{ old('about_me') }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Services Offered</label>
                                     <div id="services">
                                         <div class="service">
                                             <input type="text" name="services[0][service]" class="form-control" placeholder="Service"><br>
-                                            <textarea name="services[0][description]" class="form-control" maxlength="200" placeholder="Description"></textarea><br>
+                                            <textarea name="services[0][description]" class="form-control" placeholder="Description"></textarea><br>
                                             <button type="button" class="btn btn-secondary" onclick="removeElement(this)">Remove</button><br>
                                         </div>
                                     </div><br>
@@ -74,6 +74,10 @@
                                         </div>
                                     </div><br>
                                     <button type="button" class="btn btn-warning" onclick="addLink()">Add Link</button>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cv">Upload CV</label>
+                                    <input type="file" name="cv" id="cv" class="form-control">
                                 </div><br><br>
                                 <button type="submit" class="btn btn-primary">Add Portfolio</button>
                             </form>
@@ -97,7 +101,7 @@
             var div = document.createElement('div');
             div.className = 'service';
             div.innerHTML = '<input type="text" name="services[' + index + '][service]" class="form-control" placeholder="Service"><br>' +
-                            '<textarea name="services[' + index + '][description]" class="form-control" maxlength="200" placeholder="Description"></textarea><br>' +
+                            '<textarea name="services[' + index + '][description]" class="form-control" placeholder="Description"></textarea><br>' +
                             '<button type="button" class="btn btn-secondary" onclick="removeElement(this)">Remove</button>';
             document.getElementById('services').appendChild(div);
         }

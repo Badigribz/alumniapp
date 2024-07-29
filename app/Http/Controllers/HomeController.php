@@ -171,42 +171,56 @@ class HomeController extends Controller
 
     public function portadd(Request $request)
     {
+        // Validate the request data
         $request->validate([
             'name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'profession' => 'required|string|max:255',
-            'about_me' => 'required|string|max:50',
+            'about_me' => 'required|string',
             'services' => 'required|array',
             'services.*.service' => 'required|string|max:255',
             'services.*.description' => 'required|string|max:200',
             'links' => 'required|array',
             'links.*.work_category' => 'required|string|max:255',
             'links.*.link' => 'required|string|max:255',
+            'cv' => 'nullable|file|mimes:pdf,doc,docx', // Validate CV file
         ]);
 
+        // Update user details
         $user = auth()->user();
         $user->update([
             'name' => $request->input('name'),
-            'email' => $request->input('email')
+            'email' => $request->input('email'),
         ]);
 
-        $portfolio = portfolio::create([
+        // Create or update portfolio
+        $portfolioData = [
             'user_id' => $user->id,
             'phone_number' => $request->input('phone_number'),
             'profession' => $request->input('profession'),
             'about_me' => $request->input('about_me'),
-        ]);
+        ];
 
+        // Handle CV file upload
+        if ($request->hasFile('cv')) {
+            $cvPath = $request->file('cv')->store('cv_files'); // Store CV file
+            $portfolioData['cv'] = $cvPath;
+        }
+
+        $portfolio = portfolio::create($portfolioData);
+
+        // Store services
         foreach ($request->input('services') as $service) {
             $portfolio->services()->create($service);
         }
 
+        // Store links
         foreach ($request->input('links') as $link) {
             $portfolio->links()->create($link);
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Portfolio added successfully.');
     }
 
     public function viewport()
@@ -235,25 +249,39 @@ class HomeController extends Controller
         $request->validate([
             'phone_number' => 'required|string|max:15',
             'profession' => 'required|string|max:255',
-            'about_me' => 'required|string|max:50',
+            'about_me' => 'required|string',
             'services.*.service' => 'required|string|max:255',
             'services.*.description' => 'nullable|string|max:200',
             'links.*.work_category' => 'nullable|string|max:255',
             'links.*.link' => 'nullable|string|max:255|url',
+            'cv' => 'nullable|file|mimes:pdf,doc,docx', // Validate CV file
         ]);
-    
+
         $portfolio = portfolio::where('id', $id)->where('user_id', Auth::id())->first();
-    
+
         if (!$portfolio) {
             return redirect()->route('portfolios.index')->with('error', 'Portfolio not found');
         }
-    
+
         // Update portfolio details
         $portfolio->phone_number = $request->input('phone_number');
         $portfolio->profession = $request->input('profession');
         $portfolio->about_me = $request->input('about_me');
+
+        // Handle CV file upload
+        if ($request->hasFile('cv')) {
+            // Delete the old CV if it exists
+            if ($portfolio->cv && file_exists(storage_path('app/' . $portfolio->cv))) {
+                unlink(storage_path('app/' . $portfolio->cv));
+            }
+            
+            // Store the new CV file
+            $cvPath = $request->file('cv')->store('cv_files');
+            $portfolio->cv = $cvPath;
+        }
+
         $portfolio->save();
-    
+
         // Update services
         $portfolio->services()->delete();
         foreach ($request->input('services', []) as $service) {
@@ -264,7 +292,7 @@ class HomeController extends Controller
                 ]);
             }
         }
-    
+
         // Update links
         $portfolio->links()->delete();
         foreach ($request->input('links', []) as $link) {
@@ -275,14 +303,42 @@ class HomeController extends Controller
                 ]);
             }
         }
-    
-        return redirect()->back();
+
+        return redirect()->back()->with('success', 'Portfolio updated successfully!');
     }
+
 
     public function myportfolio()
     {
         $user = Auth::user();
         $portfolio = Portfolio::where('user_id', $user->id)->with(['services', 'links'])->first();
         return view('alumni.layouts.myportfolio',compact('user', 'portfolio'));
+    }
+
+
+
+    public function downloadCv($id)
+    {
+        $portfolio = Portfolio::findOrFail($id);
+
+        if ($portfolio->cv) {
+            $filePath = storage_path("app/{$portfolio->cv}");
+            if (file_exists($filePath)) {
+                return response()->download($filePath);
+            } else {
+                return redirect()->back()->with('error', 'CV file not found.');
+            }
+        }
+
+        return redirect()->back()->with('error', 'CV not available.');
+    }
+    
+
+
+    public function search_job(Request $request)
+    {
+        $search = $request -> search;
+        $jobs = Istjob::where('company','LIKE','%'.$search.'%')->orWhere('location','LIKE','%'.$search.'%')->orWhere('position','LIKE','%'.$search.'%')->get();
+        return view('alumni.layouts.postview',compact('jobs'));
     }
 }

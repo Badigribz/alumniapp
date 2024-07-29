@@ -52,7 +52,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>About Me</label>
-                                                    <textarea name="about_me" class="form-control" maxlength="50" required>{{ old('about_me', $portfolio->about_me) }}</textarea>
+                                                    <textarea name="about_me" class="form-control" required>{{ old('about_me', $portfolio->about_me) }}</textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Services Offered</label>
@@ -60,7 +60,7 @@
                                                         @foreach($portfolio->services as $index => $service)
                                                             <div class="service">
                                                                 <input type="text" name="services[{{ $index }}][service]" class="form-control" value="{{ old('services.'.$index.'.service', $service->service) }}" placeholder="Service" required><br>
-                                                                <textarea name="services[{{ $index }}][description]" class="form-control" maxlength="200" placeholder="Description">{{ old('services.'.$index.'.description', $service->description) }}</textarea><br>
+                                                                <textarea name="services[{{ $index }}][description]" class="form-control" placeholder="Description">{{ old('services.'.$index.'.description', $service->description) }}</textarea><br>
                                                                 <button type="button" class="btn btn-secondary" onclick="removeElement(this)">Remove</button><br>
                                                             </div>
                                                         @endforeach
@@ -79,6 +79,10 @@
                                                         @endforeach
                                                     </div><br>
                                                     <button type="button" class="btn btn-warning" onclick="addLink()">Add Link</button>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>CV Upload</label>
+                                                    <input type="file" name="cv" class="form-control">
                                                 </div><br><br>
                                                 <button type="submit" class="btn btn-primary">Update Portfolio</button>
                                             </form>
@@ -100,7 +104,7 @@
             var div = document.createElement('div');
             div.className = 'service';
             div.innerHTML = '<input type="text" name="services[' + index + '][service]" class="form-control" placeholder="Service" required><br>' +
-                            '<textarea name="services[' + index + '][description]" class="form-control" maxlength="200" placeholder="Description"></textarea><br>' +
+                            '<textarea name="services[' + index + '][description]" class="form-control" placeholder="Description"></textarea><br>' +
                             '<button type="button" class="btn btn-secondary" onclick="removeElement(this)">Remove</button><br>';
             document.getElementById('services').appendChild(div);
         }

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 
 class UserController extends Controller
@@ -52,7 +55,6 @@ class UserController extends Controller
 
        // Assign the role to the user and update the usertype column
        $user->syncRoles([$role->name]);
-       $user->usertype = $role->name; // Update the usertype column with the role name
        $user->save();
 
        return redirect()->route('viewuser')->with('success', 'User updated successfully.');
@@ -82,7 +84,6 @@ class UserController extends Controller
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'password' => bcrypt($request->input('password')), // Hash the password
-                'usertype' => $roleName, // Store the role ID in `usertype`
          ]);
 
        // Assign the role to the user
@@ -104,6 +105,41 @@ class UserController extends Controller
        return redirect()->route('viewuser')->with('success', 'User deleted successfully.');
    }
 
+   public function uploadJSON(Request $request)
+    {
+        $request->validate([
+            'json_file' => 'required|file|mimes:json',
+        ]);
 
+        $json = file_get_contents($request->file('json_file')->getRealPath());
+        $data = json_decode($json, true);
+
+        foreach ($data as $item) {
+            $validator = Validator::make($item, [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'role_id' => 'required|exists:roles,id',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $user = User::create([
+                'name' => $item['name'],
+                'email' => $item['email'],
+                'password' => Hash::make($item['password']),
+            ]);
+
+            DB::table('model_has_roles')->insert([
+                'role_id' => $item['role_id'],
+                'model_type' => 'App\Models\User',
+                'model_id' => $user->id,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Users imported successfully.');
+    }
 
 }
