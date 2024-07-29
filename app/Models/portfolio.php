@@ -17,6 +17,7 @@ class portfolio extends Model
         'about_me', 
         'phone_number', 
         'profession',
+        'cv',
     ];
 
     public function user()
@@ -32,5 +33,10 @@ class portfolio extends Model
     public function links()
     {
         return $this->hasMany(mylinks::class);
+    }
+
+    public function getCvUrlAttribute()
+    {
+        return $this->cv ? storage_path('app/' . $this->cv) : null;
     }
 }
