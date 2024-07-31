@@ -13,6 +13,11 @@
         <a href="/home"><i class="icon-home"></i> Home </a>
     </li>
 
+    <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
+         <a href="{{ route('profile.edit') }}"><i class="icon-user"></i> Profile </a>
+   </li>
+
+
     @can('view-user') <!-- Check if the user has permission to view jobs -->
         <li>
             <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('createuser') || request()->is('viewuser') ? '' : 'collapsed' }}">
