@@ -1,7 +1,7 @@
 <html dir="ltr">
 <head>
     <title>Fedena</title>
-    <link rel="shortcut icon" href="https://d316slxpfg6dut.cloudfront.net/uploads/5890/school_details/logos/3677/original/20210331040329/ist.png?Expires=1721035105&amp;Signature=dTCuDMqEH8OOZFNBOfFEs-OnGwnlvLoiM0yhljlJOenOUaeWaF~DfXCNCLBqZ8JFgnNnbt193khQpZlwlbDq-o8XkbJenybvxqPCDhz9XGZzWbQEzcS709gzSUrkV6gDPCqhepB2fI8arS9MjMDTe0hlvtc3Ta2Hu8l9T4Gz76M_&amp;Key-Pair-Id=APKAJZKMP45MLXDO32ZQ" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('images/ist.png') }}" type="image/png">
     <link href="https://d13ohw70dmfvjd.cloudfront.net/stylesheets/_layouts/login.css?c34eccac6687c62c61455107dc949706" media="screen" rel="stylesheet" type="text/css">
     <link href="https://d13ohw70dmfvjd.cloudfront.net/stylesheets/_styles/ui.all.css?02dd6a04a27da388e781a9f122adb15e" media="screen" rel="stylesheet" type="text/css">
     <link href="https://d13ohw70dmfvjd.cloudfront.net/stylesheets/modalbox.css?0b38ef36bd8317ad8fc66dc0e094472b" media="screen" rel="stylesheet" type="text/css">
@@ -27,17 +27,41 @@
             background-color: red;
             border-color: red;
         }
+        .no-underline {
+        text-decoration: none;
+        }
+
+        .small-text {
+        font-size: 12px;
+        }
+
+       .text-black {
+        color: grey;
+        }
+
+        .hover-text-red:hover {
+        color: red;
+        }
+
+        .move-right {
+        margin-left: 80px; 
+        }
+
+        #big_top_logo {
+        padding-top: 0; /* Adjust this value as needed */
+        margin-top: -1px; /* Adjust this value as needed */
+        }
     </style>
 </head>
 
-<body id="container" style="background-image: url('')">
+<body id="container" style="background-image: url('{{ asset('images/background.png') }}');">
     <div id="wrapper">
         <div id="login_box">
             <div id="school-name">Institute of Software Technologies</div>
             <div id="big_login-input-box">
                 <div id="big_logo_area">
                     <div id="big_top_logo">
-                        <img alt="Ist" src="https://d316slxpfg6dut.cloudfront.net/uploads/5890/school_details/logos/3677/original/20210331040329/ist.png?Expires=1721035105&amp;Signature=dTCuDMqEH8OOZFNBOfFEs-OnGwnlvLoiM0yhljlJOenOUaeWaF~DfXCNCLBqZ8JFgnNnbt193khQpZlwlbDq-o8XkbJenybvxqPCDhz9XGZzWbQEzcS709gzSUrkV6gDPCqhepB2fI8arS9MjMDTe0hlvtc3Ta2Hu8l9T4Gz76M_&amp;Key-Pair-Id=APKAJZKMP45MLXDO32ZQ">
+                    <img alt="Ist" src="{{ asset('images/ist.png') }}">
                     </div>
                 </div>
 
@@ -57,22 +81,22 @@
                             <x-text-input id="password" class="block mt-1 w-full input-box" type="password" name="password" required autocomplete="current-password" placeholder="Password" />
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         </div>
+                       
 
+                        <br><br>
                         <div id="submit_area" class="flex items-center justify-end mt-4">
                             <x-primary-button class="ms-3 login-btn">
                                 {{ __('Login') }}
                             </x-primary-button>
 
                             @if (Route::has('password.request'))
-                                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                                    {{ __('Forgot password?') }}
-                                </a>
+                            <a class="no-underline small-text text-black hover-text-red move-right rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                              {{ __('Forgot password?') }}
+                            </a>
+
                             @endif
                         </div>
                         
-                        <div id="google_login_area">
-                            <a href="/oauth/new?provider=google"><span class="google-signin-icon"></span></a>
-                        </div>
                     </div>
                 </form>
             </div>
