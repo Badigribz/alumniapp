@@ -13,7 +13,7 @@
         <a href="/home"><i class="icon-home"></i> Home </a>
     </li>
 
-    <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
+    <li class="{{ request()->routeIs('home') ?  : '' }}">
          <a href="{{ route('profile.edit') }}"><i class="icon-user"></i> Profile </a>
    </li>
 
