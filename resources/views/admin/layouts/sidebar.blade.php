@@ -28,8 +28,5 @@
                     </li>
                 </ul>
             </li>
-        </ul><span class="heading">Extras</span>
-        
-
-
-      </nav>
+    
+        </nav>

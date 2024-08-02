@@ -78,8 +78,4 @@
     </li>
     @endcan
 </ul>
-
-<span class="heading">Extras</span>
-<!-- Add more sections as needed -->
-
-      </nav>
+</nav>

@@ -32,8 +32,5 @@
             <li class="{{ request()->is('viewposting') ? 'active' : '' }}">
                 <a href="{{ url('viewposting') }}"><i class="fas fa-briefcase"></i> Jobs </a>
             </li>
-        </ul><span class="heading">Extras</span>
-        
-
 
       </nav>
