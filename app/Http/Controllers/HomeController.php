@@ -7,7 +7,9 @@ use App\Models\Istjob;
 use App\Models\portfolio;
 use Illuminate\Http\Request;
 use App\Models\Qualification;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
@@ -322,9 +324,10 @@ class HomeController extends Controller
         $portfolio = Portfolio::findOrFail($id);
 
         if ($portfolio->cv) {
-            $filePath = storage_path("app/{$portfolio->cv}");
-            if (file_exists($filePath)) {
-                return response()->download($filePath);
+            $filePath = $portfolio->cv;
+
+            if (Storage::exists($filePath)) {
+                return Storage::download($filePath);
             } else {
                 return redirect()->back()->with('error', 'CV file not found.');
             }
