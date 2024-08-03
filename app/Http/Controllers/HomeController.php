@@ -322,7 +322,9 @@ class HomeController extends Controller
 
     public function downloadCv($id)
     {
+
         $portfolio = Portfolio::findOrFail($id);
+
 
         if ($portfolio->cv) {
             $filePath = $portfolio->cv;

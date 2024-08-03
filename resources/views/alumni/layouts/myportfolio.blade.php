@@ -59,7 +59,7 @@
                     <p class="section-subtitle">Who Am I ?</p>
                     <h2 class="section-title mb-3">About Me</h2>
                     <p>{{ $portfolio->about_me }}</p>
-                    <a href="{{ url('portfolio.downloadCv', $portfolio->id) }}" class="btn-rounded btn btn-outline-primary mt-4">Download CV</a>
+                    <a href="{{ route('portfolio.downloadCv', $portfolio->id) }}" class="btn-rounded btn btn-outline-primary mt-4">Download CV</a>
                 </div>
             </div>
         </div>
