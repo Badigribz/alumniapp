@@ -7,9 +7,7 @@ use App\Models\Istjob;
 use App\Models\portfolio;
 use Illuminate\Http\Request;
 use App\Models\Qualification;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
@@ -20,11 +18,10 @@ class HomeController extends Controller
 
         if ($user) {
             // Check user roles and redirect accordingly
-            if ($user->hasRole('superuser') || $user->hasRole('admin')) {
+            if ($user->hasRole('superuser')) {
                 $users = User::all(); // Fetch all users
                 return view('super.index', compact('users'));
-            }
-             elseif ($user->hasRole('alumni')) {
+            } elseif ($user->hasRole('alumni')) {
                 return view('alumni.index');
             } elseif ($user->hasRole('admin')) {
                 return view('admin.index');
@@ -228,7 +225,7 @@ class HomeController extends Controller
 
     public function viewport()
     {
-        $user_id = Auth::id();
+        $user_id = Auth::id(); 
         $portfolios = portfolio::where('user_id', $user_id)->get();
         return view('alumni.layouts.viewport', compact('portfolios'));
     }
@@ -277,7 +274,7 @@ class HomeController extends Controller
             if ($portfolio->cv && file_exists(storage_path('app/' . $portfolio->cv))) {
                 unlink(storage_path('app/' . $portfolio->cv));
             }
-
+            
             // Store the new CV file
             $cvPath = $request->file('cv')->store('cv_files');
             $portfolio->cv = $cvPath;
@@ -322,15 +319,12 @@ class HomeController extends Controller
 
     public function downloadCv($id)
     {
-
         $portfolio = Portfolio::findOrFail($id);
 
-
         if ($portfolio->cv) {
-            $filePath = $portfolio->cv;
-
-            if (Storage::exists($filePath)) {
-                return Storage::download($filePath);
+            $filePath = storage_path("app/{$portfolio->cv}");
+            if (file_exists($filePath)) {
+                return response()->download($filePath);
             } else {
                 return redirect()->back()->with('error', 'CV file not found.');
             }
@@ -338,7 +332,7 @@ class HomeController extends Controller
 
         return redirect()->back()->with('error', 'CV not available.');
     }
-
+    
 
 
     public function search_job(Request $request)
