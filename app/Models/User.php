@@ -46,8 +46,8 @@ class User extends Authenticatable
         ];
     }
 
-    // User.php
-
-
-
+    public function portfolio()
+    {
+        return $this->hasOne(portfolio::class);
+    }
 }

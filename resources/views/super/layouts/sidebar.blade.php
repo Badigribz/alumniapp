@@ -1,7 +1,6 @@
 <nav id="sidebar">
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
-          <div class="avatar"><img src="{{ Auth::user()->profile_photo_url }}" alt="..." class="img-fluid rounded-circle"></div>
           <div class="title">
             <h1 class="h5">{{Auth::user()->name}}</h1>
             <p>IST SuperAdmin</p>
@@ -13,6 +12,11 @@
     <li class="{{ request()->is('home') ? 'active' : '' }}">
         <a href="/home"><i class="icon-home"></i> Home </a>
     </li>
+
+    <li class="{{ request()->routeIs('home') ?  : '' }}">
+         <a href="{{ route('profile.edit') }}"><i class="icon-user"></i> Profile </a>
+   </li>
+
 
     @can('view-user') <!-- Check if the user has permission to view jobs -->
         <li>
@@ -74,8 +78,4 @@
     </li>
     @endcan
 </ul>
-
-<span class="heading">Extras</span>
-<!-- Add more sections as needed -->
-
-      </nav>
+</nav>

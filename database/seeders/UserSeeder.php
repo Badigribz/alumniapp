@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::find(4);
+        $user = User::find(1);
         $user->assignRole('superuser');
 
 

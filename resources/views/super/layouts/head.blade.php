@@ -16,9 +16,10 @@
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="{{asset('../DashTemp/css/custom.css')}}">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="{{asset('../DashTemp/img/favicon.ico')}}">
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- <link rel="shortcut icon" href="{{asset('../DashTemp/img/favicon.ico')}}"> -->
+    <link rel="shortcut icon" href="{{asset('images/ist.png') }}" type="image/png">
+    <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
 
 <style>
   .borrow-request-preview {

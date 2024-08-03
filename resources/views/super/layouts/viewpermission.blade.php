@@ -10,10 +10,6 @@
           margin: auto;
           width: 100%;
         }
-        th {
-          background: #b5406c;
-          color: white;
-        }
         .img_book {
           width: 80px;
           height: auto;
@@ -36,7 +32,7 @@
           padding: 5px 10px;
           border-radius: 5px;
           border: none;
-          background-color: #b5406c;
+          background-color: #fff;
           color: #fff;
           cursor: pointer;
         }
@@ -56,6 +52,21 @@
 
         }
 
+    .page-header
+    {
+        background-color: white;
+    }
+    .block-body
+    {
+        background-color: white;
+            }
+    .block
+    {
+        background-color: white;
+    }
+
+</style>
+
       </style>
   </head>
 
@@ -74,8 +85,8 @@
       <div class="page-content">
         <div class="page-header">
           <div class="container-fluid">
-            <h2 class="h5 no-margin-bottom">Permissions</h2>
-            <a href="{{ route('createpermission') }}" class="btn btn-primary">Add Permission</a>
+            <h2 class="h5 no-margin-bottom">Permissions</h2><br>
+            <a href="{{ route('createpermission') }}" class="btn btn-primary">Add Permission</a><br>
             <section class="no-padding-top">
                 <div class="container-fluid">
                     <div class="row">

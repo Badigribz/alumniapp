@@ -3,6 +3,22 @@
 <head>
     <title>Add User</title>
     @include('super.layouts.head')
+    <style>
+
+    .page-header
+    {
+        background-color: white;
+    }
+    .block-body
+    {
+        background-color: white;
+            }
+    .block
+    {
+        background-color: white;
+    }
+
+</style>
 </head>
 <body>
     <header class="header">
@@ -64,6 +80,15 @@
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Add User</button>
+                            </form><br><br>
+                            <h2 class="h5 no-margin-bottom">Add Multiple Users using JSON File</h2>
+                            <form action="{{ route('uploadjson') }}" method="POST" enctype="multipart/form-data" class="mt-4">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="json_file">Upload JSON File</label>
+                                    <input type="file" name="json_file" id="json_file" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Upload JSON</button>
                             </form>
                         </div>
                     </section>
