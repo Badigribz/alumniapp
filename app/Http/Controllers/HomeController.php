@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Istjob;
+use App\Models\gallery;
 use App\Models\portfolio;
 use Illuminate\Http\Request;
 use App\Models\Qualification;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -21,14 +23,44 @@ class HomeController extends Controller
         if ($user) {
             // Check user roles and redirect accordingly
             if ($user->hasRole('superuser')) {
+                $super = DB::table('model_has_roles')->where('role_id', 1)->count();
+                $admin = DB::table('model_has_roles')->where('role_id', 2)->count();
+                $alumni = DB::table('model_has_roles')->where('role_id', 3)->count();
                 $users = User::all(); // Fetch all users
-                return view('super.index', compact('users'));
+                $userDetails = DB::table('users')
+                    ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                    ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                    ->select('users.name', 'roles.name as role')
+                    ->get();
+                $roleDetails = DB::table('roles')
+                    ->get();
+                $permDetails = DB::table('permissions')
+                    ->get();
+                return view('super.index', compact('users', 'super', 'admin', 'alumni', 'userDetails', 'roleDetails', 'permDetails'));
+
             } elseif ($user->hasRole('alumni')) {
-                return view('alumni.index');
+                $images = gallery::all();
+                return view('alumni.index', compact('images'));
+
             } elseif ($user->hasRole('admin')) {
-                return view('admin.index');
+                $super = DB::table('model_has_roles')->where('role_id', 1)->count();
+                $admin = DB::table('model_has_roles')->where('role_id', 2)->count();
+                $alumni = DB::table('model_has_roles')->where('role_id', 3)->count();
+                $users = User::all(); // Fetch all users
+                $userDetails = DB::table('users')
+                    ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                    ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                    ->select('users.name', 'roles.name as role')
+                    ->get();
+                $roleDetails = DB::table('roles')
+                    ->get();
+                $permDetails = DB::table('permissions')
+                    ->get();
+                return view('admin.index', compact('users', 'super', 'admin', 'alumni', 'userDetails', 'roleDetails', 'permDetails'));
+
             } elseif ($user->hasRole('employer')) {
                 return view('employer.index');
+
             }else {
                // return redirect()->route('home')->with('error', 'Unauthorized access');
                Auth::logout();
@@ -344,4 +376,80 @@ class HomeController extends Controller
         $jobs = Istjob::where('company','LIKE','%'.$search.'%')->orWhere('location','LIKE','%'.$search.'%')->orWhere('position','LIKE','%'.$search.'%')->get();
         return view('alumni.layouts.postview',compact('jobs'));
     }
+
+    public function createGallery()
+    {
+        return view('admin.layouts.galleryadd');
+    }
+
+    public function storeGallery(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+        ]);
+
+        $imagePath = $request->file('image')->store('gallery_images', 'public');
+
+        gallery::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'image_path' => $imagePath,
+        ]);
+
+        return redirect()->back();
+    }
+    public function viewGallery()
+    {
+        $images = gallery::all();
+        return view('admin.layouts.galleryview', compact('images'));
+    }
+
+    public function deleteGallery($id)
+    {
+        $image = gallery::findOrFail($id);
+
+        // Delete image file from storage
+        Storage::disk('public')->delete($image->image_path);
+
+        // Delete image record from database
+        $image->delete();
+
+        return redirect()->back();
+    }
+
+    public function editGallery($id)
+    {
+        $image = gallery::findOrFail($id);
+        return view('admin.layouts.galleryedit', compact('image'));
+    }
+
+    public function updateGallery(Request $request, $id)
+    {
+        $image = gallery::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $image->title = $request->title;
+        $image->description = $request->description;
+
+        if ($request->hasFile('image')) {
+            // Delete the old image file
+            Storage::disk('public')->delete($image->image_path);
+
+            // Upload the new image file
+            $path = $request->file('image')->store('gallery', 'public');
+            $image->image_path = $path;
+        }
+
+        $image->save();
+
+        return view('admin.layouts.galleryview');
+    }
+
 }
