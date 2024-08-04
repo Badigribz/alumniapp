@@ -11,6 +11,7 @@ use App\Models\Qualification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
@@ -355,9 +356,10 @@ class HomeController extends Controller
         $portfolio = Portfolio::findOrFail($id);
 
         if ($portfolio->cv) {
-            $filePath = storage_path("app/{$portfolio->cv}");
-            if (file_exists($filePath)) {
-                return response()->download($filePath);
+            $filePath = $portfolio->cv;
+
+            if (Storage::exists($filePath)) {
+                return Storage::download($filePath);
             } else {
                 return redirect()->back()->with('error', 'CV file not found.');
             }
@@ -374,4 +376,80 @@ class HomeController extends Controller
         $jobs = Istjob::where('company','LIKE','%'.$search.'%')->orWhere('location','LIKE','%'.$search.'%')->orWhere('position','LIKE','%'.$search.'%')->get();
         return view('alumni.layouts.postview',compact('jobs'));
     }
+
+    public function createGallery()
+    {
+        return view('admin.layouts.galleryadd');
+    }
+
+    public function storeGallery(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+        ]);
+
+        $imagePath = $request->file('image')->store('gallery_images', 'public');
+
+        gallery::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'image_path' => $imagePath,
+        ]);
+
+        return redirect()->back();
+    }
+    public function viewGallery()
+    {
+        $images = gallery::all();
+        return view('admin.layouts.galleryview', compact('images'));
+    }
+
+    public function deleteGallery($id)
+    {
+        $image = gallery::findOrFail($id);
+
+        // Delete image file from storage
+        Storage::disk('public')->delete($image->image_path);
+
+        // Delete image record from database
+        $image->delete();
+
+        return redirect()->back();
+    }
+
+    public function editGallery($id)
+    {
+        $image = gallery::findOrFail($id);
+        return view('admin.layouts.galleryedit', compact('image'));
+    }
+
+    public function updateGallery(Request $request, $id)
+    {
+        $image = gallery::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $image->title = $request->title;
+        $image->description = $request->description;
+
+        if ($request->hasFile('image')) {
+            // Delete the old image file
+            Storage::disk('public')->delete($image->image_path);
+
+            // Upload the new image file
+            $path = $request->file('image')->store('gallery', 'public');
+            $image->image_path = $path;
+        }
+
+        $image->save();
+
+        return view('admin.layouts.galleryview');
+    }
+
 }
