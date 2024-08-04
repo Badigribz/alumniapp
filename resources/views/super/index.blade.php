@@ -38,10 +38,13 @@
         <div class="page-header">
           <div class="container-fluid">
             <h2 class="h5 no-margin-bottom">Dashboard</h2>
+            
           </div>
+        
         </div>
-
         @include('super.layouts.body')
+
+       
 
         <footer class="footer">
           @include('super.layouts.footer')

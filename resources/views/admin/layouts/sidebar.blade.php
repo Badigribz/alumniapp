@@ -29,4 +29,21 @@
                 </ul>
             </li>
     
+            <li>
+                <a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse" class="{{ request()->is('createGallery') || request()->is('viewGallery') ? '' : 'collapsed' }}">
+                    <i class="fas fa-images"></i> Gallery
+                </a>
+                <ul id="exampledropdownDropdown1" class="collapse list-unstyled {{ request()->is('createGallery') || request()->is('viewGallery') ? 'show' : '' }}">
+                    <li class="{{ request()->is('createGallery') ? 'active' : '' }}">
+                        <a href="{{ url('createGallery') }}">Upload Photo</a>
+                    </li>
+                    <li class="{{ request()->is('viewGallery') ? 'active' : '' }}">
+                        <a href="{{ url('viewGallery') }}">View Photo</a>
+                    </li>
+                </ul>
+            </li>
+    
         </nav>
+
+
+        

@@ -1,79 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .cat_table {
-          text-align: center;
-          margin: auto;
-          width: 100%;
-        }
-        th {
-          background: #b5406c;
-          color: white;
-        }
-        .img_book {
-          width: 80px;
-          height: auto;
-        }
-        table {
-          width: 100%;
-        }
-        .filter-form {
-          margin-bottom: 20px;
-          text-align: center;
-        }
-        .filter-form input,
-        .filter-form select {
-          margin: 5px;
-          padding: 5px;
-          border-radius: 5px;
-          border: 1px solid #ccc;
-        }
-        .filter-form button {
-          padding: 5px 10px;
-          border-radius: 5px;
-          border: none;
-          background-color: #b5406c;
-          color: #fff;
-          cursor: pointer;
-        }
-        .btn-sm:disabled {
-          pointer-events: none;
-          opacity: 0.5;
-          color: #aaa; /* Optional: change the color to a lighter grey */
-        }
-        @media (max-width: 768px) {
+<section class="no-padding-top no-padding-bottom">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 col-sm-6">
+        <div class="statistic-block block">
+          <div class="progress-details d-flex align-items-end justify-content-between">
+            <div class="title">
+              <div class="icon"><i class="icon-user-1"></i></div><strong>No. of SuperUser</strong>
+            </div>
+            <div class="number dashtext-1">{{$super}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="statistic-block block">
+          <div class="progress-details d-flex align-items-end justify-content-between">
+            <div class="title">
+              <div class="icon"><i class="icon-user-1"></i></div><strong>No. of Admins</strong>
+            </div>
+            <div class="number dashtext-2">{{$admin}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="statistic-block block">
+          <div class="progress-details d-flex align-items-end justify-content-between">
+            <div class="title">
+              <div class="icon"><i class="icon-user-1"></i></div><strong>No. of Alumni</strong>
+            </div>
+            <div class="number dashtext-3">{{$alumni}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-          .filter-form input,
-          .filter-form select,
-          .filter-form button {
-            width: 100%;
-            margin: 5px 0;
-          }
+<section class="no-padding-top no-padding-bottom">
+  <div class="container-fluid">
+    <div class="row">
+      
+      <div class="col-md-6">
+        <div class="statistic-block block">
+          <div class="progress-details d-flex align-items-end justify-content-between">
+            <div class="title">
+              <div class="icon"><i class="icon-clipboard"></i></div>
+              <strong>View Users</strong>
+            </div>
+          </div>
+          
+          <div class="borrow-request-preview">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($userDetails as $user)
+                            <tr>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->role }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div><br>
+          <div class="preview">
+            <a href="{{route ('viewuser')}}" class="tag">View All Users</a> 
+          </div>
+        </div>
+      </div>
 
-        }
+      
+      <div class="col-md-6">
+        <div class="statistic-block block">
+          <div class="progress-details d-flex align-items-end justify-content-between">
+            <div class="title">
+              <div class="icon"><i class="icon-clipboard"></i></div>
+              <strong>View Roles </strong>
+            </div>
+          </div>
+          
+          <div class="borrow-request-preview">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Role ID</th>
+                                <th>Role Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($roleDetails as $role)
+                            <tr>
+                                <td>{{ $role->id }}</td>
+                                <td>{{ $role->name }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div><br>
+          <div class="preview">
+            <a href="{{route('viewrole')}}" class="tag">View All Roles</a> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      </style>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
-
-</head>
-<body>
-<div class="container">
-    <h1>Dashboard</h1>
-
-
-
-</div>
-
-
-
-
-
-
-</body>
-</html>
+  <div class="col-md-6">
+        <div class="statistic-block block">
+          <div class="progress-details d-flex align-items-end justify-content-between">
+            <div class="title">
+              <div class="icon"><i class="icon-clipboard"></i></div>
+              <strong>View Permissions </strong>
+            </div>
+          </div>
+          
+          <div class="borrow-request-preview">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Permission ID</th>
+                                <th>Permission Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($permDetails as $permission)
+                            <tr>
+                                <td>{{ $permission->id }}</td>
+                                <td>{{ $permission->name }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div><br>
+          <div class="preview">
+            <a href="{{route('viewpermission')}}" class="tag">View All Permissions</a> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+        
+    </div>
+    </div>
+</section>

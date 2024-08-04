@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Istjob;
+use App\Models\gallery;
 use App\Models\portfolio;
 use Illuminate\Http\Request;
 use App\Models\Qualification;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,14 +22,44 @@ class HomeController extends Controller
         if ($user) {
             // Check user roles and redirect accordingly
             if ($user->hasRole('superuser')) {
+                $super = DB::table('model_has_roles')->where('role_id', 1)->count();
+                $admin = DB::table('model_has_roles')->where('role_id', 2)->count();
+                $alumni = DB::table('model_has_roles')->where('role_id', 3)->count();
                 $users = User::all(); // Fetch all users
-                return view('super.index', compact('users'));
+                $userDetails = DB::table('users')
+                    ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                    ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                    ->select('users.name', 'roles.name as role')
+                    ->get();
+                $roleDetails = DB::table('roles')
+                    ->get();
+                $permDetails = DB::table('permissions')
+                    ->get();
+                return view('super.index', compact('users', 'super', 'admin', 'alumni', 'userDetails', 'roleDetails', 'permDetails'));
+
             } elseif ($user->hasRole('alumni')) {
-                return view('alumni.index');
+                $images = gallery::all();
+                return view('alumni.index', compact('images'));
+
             } elseif ($user->hasRole('admin')) {
-                return view('admin.index');
+                $super = DB::table('model_has_roles')->where('role_id', 1)->count();
+                $admin = DB::table('model_has_roles')->where('role_id', 2)->count();
+                $alumni = DB::table('model_has_roles')->where('role_id', 3)->count();
+                $users = User::all(); // Fetch all users
+                $userDetails = DB::table('users')
+                    ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                    ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                    ->select('users.name', 'roles.name as role')
+                    ->get();
+                $roleDetails = DB::table('roles')
+                    ->get();
+                $permDetails = DB::table('permissions')
+                    ->get();
+                return view('admin.index', compact('users', 'super', 'admin', 'alumni', 'userDetails', 'roleDetails', 'permDetails'));
+
             } elseif ($user->hasRole('employer')) {
                 return view('employer.index');
+
             }else {
                // return redirect()->route('home')->with('error', 'Unauthorized access');
                Auth::logout();

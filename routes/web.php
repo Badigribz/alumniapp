@@ -50,6 +50,12 @@ Route::get('/editport/{id}', [HomeController::class, 'editport'])->middleware('p
 Route::put('/portedit/{id}', [HomeController::class, 'portedit'])->middleware('permission:edit-portfolio')->name('portedit');
 Route::get('myportfolio', [HomeController::class, 'myportfolio'])->middleware('permission:myportfolio')->name('myportfolio');
 Route::get('search_job', [HomeController::class, 'search_job'])->middleware('permission:search-job')->name('search_job');
+Route::get('createGallery', [HomeController::class, 'createGallery'])->name('createGallery');
+Route::post('storeGallery', [HomeController::class, 'storeGallery'])->name('storeGallery');
+Route::get('viewGallery', [HomeController::class, 'viewGallery'])->name('viewGallery');
+Route::delete('deleteGallery/{id}', [HomeController::class, 'deleteGallery'])->name('deleteGallery');
+Route::get('editGallery/{id}', [HomeController::class, 'editGallery'])->name('editGallery');
+Route::post('updateGallery/{id}', [HomeController::class, 'updateGallery'])->name('updateGallery');
 
 
 
